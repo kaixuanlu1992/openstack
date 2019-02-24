@@ -1,9 +1,10 @@
 package com.wentt.openstack.service.impl;
 
 import com.wentt.openstack.controller.vo.NetworkVo;
+import com.wentt.openstack.controller.vo.SubnetVo;
 import com.wentt.openstack.service.NetworkService;
 import com.wentt.openstack.util.CommonUitl;
-import org.openstack4j.api.OSClient;
+import org.openstack4j.api.OSClient.OSClientV2;
 import org.openstack4j.model.network.Subnet;
 import org.springframework.stereotype.Service;
 
@@ -15,14 +16,31 @@ public class NetworkServiceImpl implements NetworkService {
     @Override
     public List<NetworkVo> getNetworkList() {
         List<NetworkVo> rs = new ArrayList<>();
-        OSClient.OSClientV2 os = CommonUitl.getAuthOs();
+        OSClientV2 os = CommonUitl.getAuthOs();
         os.networking().network().list().forEach(item -> {
             NetworkVo temp = new NetworkVo();
             temp.setName(item.getName());
             temp.setId(item.getId());
-            temp.setTenantId(item.getTenantId());
-
+            temp.setTenantName(os.identity().tenants().get(item.getTenantId()).getName());
+            temp.setIsShared(item.isShared());
+            temp.setType(item.getNetworkType().name());
             rs.add(temp);
+        });
+        return rs;
+    }
+
+    @Override
+    public List<SubnetVo> getSubnetList(String networkId) {
+        List<SubnetVo> rs = new ArrayList<>();
+        OSClientV2 os = CommonUitl.getAuthOs();
+        os.networking().network().get(networkId).getNeutronSubnets().forEach(item->{
+            SubnetVo subnet=new SubnetVo();
+            subnet.setId(item.getId());
+            subnet.setName(item.getName());
+            subnet.setCidr(item.getCidr());
+            subnet.setIpVersion(item.getIpVersion().name());
+            subnet.setGetway(item.getGateway());
+            subnet.setAddressPool(item.getAllocationPools().toString());
         });
         return rs;
     }

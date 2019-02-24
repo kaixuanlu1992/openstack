@@ -2,6 +2,7 @@ package com.wentt.openstack.controller;
 
 import com.wentt.openstack.controller.vo.NetworkVo;
 import com.wentt.openstack.controller.vo.ServerVo;
+import com.wentt.openstack.controller.vo.SubnetVo;
 import com.wentt.openstack.service.NetworkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,6 +28,10 @@ public class NetworkController {
     @GetMapping("/network/list")
     public List<NetworkVo> getNetworkList(){
         return networkService.getNetworkList();
+    }
+    @GetMapping("/subnet/list")
+    public List<SubnetVo> getSubnetList(@RequestParam("networkId")String networkId){
+        return networkService.getSubnetList(networkId);
     }
 
     @PostMapping("/network")

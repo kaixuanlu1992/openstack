@@ -9,6 +9,5 @@ public class NetworkVo {
     private String tenantId;
     private String tenantName;
     private String type;
-    private String subnet;
     private Boolean isShared;
 }
