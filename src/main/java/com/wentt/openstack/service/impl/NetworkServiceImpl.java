@@ -1,10 +1,12 @@
 package com.wentt.openstack.service.impl;
 
+import com.wentt.openstack.controller.dto.NetworkDto;
 import com.wentt.openstack.controller.vo.NetworkVo;
 import com.wentt.openstack.controller.vo.SubnetVo;
 import com.wentt.openstack.service.NetworkService;
 import com.wentt.openstack.util.CommonUitl;
 import org.openstack4j.api.OSClient.OSClientV2;
+import org.openstack4j.model.network.Network;
 import org.openstack4j.model.network.Subnet;
 import org.springframework.stereotype.Service;
 
@@ -43,5 +45,11 @@ public class NetworkServiceImpl implements NetworkService {
             subnet.setAddressPool(item.getAllocationPools().toString());
         });
         return rs;
+    }
+
+    @Override
+    public String createNetwork(NetworkDto dto) {
+        Network network=CommonUitl.createNetwork(dto);
+        return network.getId();
     }
 }

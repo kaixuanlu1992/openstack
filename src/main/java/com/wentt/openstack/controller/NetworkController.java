@@ -1,5 +1,6 @@
 package com.wentt.openstack.controller;
 
+import com.wentt.openstack.controller.dto.NetworkDto;
 import com.wentt.openstack.controller.vo.NetworkVo;
 import com.wentt.openstack.controller.vo.ServerVo;
 import com.wentt.openstack.controller.vo.SubnetVo;
@@ -24,7 +25,6 @@ public class NetworkController {
         response.setHeader("Access-Control-Allow-Origin", "*");
         return networkTypeList;
     }
-
     @GetMapping("/network/list")
     public List<NetworkVo> getNetworkList(){
         return networkService.getNetworkList();
@@ -35,8 +35,8 @@ public class NetworkController {
     }
 
     @PostMapping("/network")
-    public String createNetwork(){
-        return null;
+    public String createNetwork(@RequestBody NetworkDto dto){
+        return networkService.createNetwork(dto);
     }
 
     @PutMapping("/network")

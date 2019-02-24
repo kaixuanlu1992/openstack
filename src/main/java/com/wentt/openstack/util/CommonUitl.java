@@ -1,5 +1,6 @@
 package com.wentt.openstack.util;
 
+import com.wentt.openstack.controller.dto.NetworkDto;
 import org.openstack4j.api.Builders;
 import org.openstack4j.api.OSClient.OSClientV2;
 import org.openstack4j.api.types.Facing;
@@ -36,5 +37,9 @@ public class CommonUitl {
                 .networks(net)
                 .build();
         return os.compute().servers().boot(sc);
+    }
+
+    public static Network createNetwork(NetworkDto dto) {
+
     }
 }
