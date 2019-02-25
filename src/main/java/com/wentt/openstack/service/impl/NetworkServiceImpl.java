@@ -7,7 +7,6 @@ import com.wentt.openstack.service.NetworkService;
 import com.wentt.openstack.util.CommonUitl;
 import org.openstack4j.api.OSClient.OSClientV2;
 import org.openstack4j.model.network.Network;
-import org.openstack4j.model.network.Subnet;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -35,8 +34,8 @@ public class NetworkServiceImpl implements NetworkService {
     public List<SubnetVo> getSubnetList(String networkId) {
         List<SubnetVo> rs = new ArrayList<>();
         OSClientV2 os = CommonUitl.getAuthOs();
-        os.networking().network().get(networkId).getNeutronSubnets().forEach(item->{
-            SubnetVo subnet=new SubnetVo();
+        os.networking().network().get(networkId).getNeutronSubnets().forEach(item -> {
+            SubnetVo subnet = new SubnetVo();
             subnet.setId(item.getId());
             subnet.setName(item.getName());
             subnet.setCidr(item.getCidr());
@@ -49,7 +48,14 @@ public class NetworkServiceImpl implements NetworkService {
 
     @Override
     public String createNetwork(NetworkDto dto) {
-        Network network=CommonUitl.createNetwork(dto);
+        OSClientV2 os = CommonUitl.getAuthOs();
+        Network network = CommonUitl.createNetwork(os, dto);
         return network.getId();
+    }
+
+    @Override
+    public Boolean deleteNetwork(String networkId) {
+        OSClientV2 os = CommonUitl.getAuthOs();
+        return os.networking().network().delete(networkId).isSuccess();
     }
 }

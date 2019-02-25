@@ -9,6 +9,7 @@ import org.openstack4j.model.compute.Image;
 import org.openstack4j.model.compute.Server;
 import org.openstack4j.model.compute.ServerCreate;
 import org.openstack4j.model.network.Network;
+import org.openstack4j.model.network.NetworkType;
 import org.openstack4j.openstack.OSFactory;
 
 import java.util.ArrayList;
@@ -39,8 +40,65 @@ public class CommonUitl {
         return os.compute().servers().boot(sc);
     }
 
-    public static Network createNetwork(NetworkDto dto) {
-        return null;
+    public static Network createNetwork(OSClientV2 os, NetworkDto dto) {
+        if ("LOCAL".equals(dto.getType())) {
+            return createLocalNetwork(os, dto);
+        } else if ("FLAT".equals(dto.getType())) {
+            return createFlatNetwork(os, dto);
+        } else if ("VLAN".equals(dto.getType())) {
+            return createVlanNetwork(os, dto);
+        } else if ("VXLAN".equals(dto.getType())) {
+            return createVXlanNetwork(os, dto);
+        } else {
+            return null;
+        }
+    }
 
+    private static Network createLocalNetwork(OSClientV2 os, NetworkDto dto) {
+        return os.networking().network()
+                .create(Builders.network()
+                        .name(dto.getName())
+                        .tenantId(dto.getTenantId())
+                        .networkType(NetworkType.LOCAL)
+                        .adminStateUp(dto.getStateUp())
+                        .isShared(dto.getIsShared())
+                        .build());
+    }
+
+    private static Network createFlatNetwork(OSClientV2 os, NetworkDto dto) {
+        return os.networking().network()
+                .create(Builders.network()
+                        .name(dto.getName())
+                        .tenantId(dto.getTenantId())
+                        .networkType(NetworkType.FLAT)
+                        .physicalNetwork(dto.getPhysicalNetwork())
+                        .adminStateUp(dto.getStateUp())
+                        .isShared(dto.getIsShared())
+                        .build());
+    }
+
+    private static Network createVlanNetwork(OSClientV2 os, NetworkDto dto) {
+        return os.networking().network()
+                .create(Builders.network()
+                        .name(dto.getName())
+                        .tenantId(dto.getTenantId())
+                        .networkType(NetworkType.VLAN)
+                        .physicalNetwork(dto.getPhysicalNetwork())
+                        .segmentId(dto.getSegmentId())
+                        .adminStateUp(dto.getStateUp())
+                        .isShared(dto.getIsShared())
+                        .build());
+    }
+
+    private static Network createVXlanNetwork(OSClientV2 os, NetworkDto dto) {
+        return os.networking().network()
+                .create(Builders.network()
+                        .name(dto.getName())
+                        .tenantId(dto.getTenantId())
+                        .networkType(NetworkType.VXLAN)
+                        .segmentId(dto.getSegmentId())
+                        .adminStateUp(dto.getStateUp())
+                        .isShared(dto.getIsShared())
+                        .build());
     }
 }

@@ -18,7 +18,6 @@ import java.util.List;
 public class NetworkController {
     @Value("${network.type}")
     private List<String> networkTypeList;
-
     @Autowired
     private NetworkService networkService;
     @Autowired
@@ -34,10 +33,6 @@ public class NetworkController {
     public List<NetworkVo> getNetworkList(){
         return networkService.getNetworkList();
     }
-    @GetMapping("/subnet/list")
-    public List<SubnetVo> getSubnetList(@RequestParam("networkId")String networkId){
-        return networkService.getSubnetList(networkId);
-    }
 
     @PostMapping("/network")
     public String createNetwork(@RequestBody NetworkDto dto){
@@ -51,7 +46,12 @@ public class NetworkController {
 
     @DeleteMapping("/network")
     public Boolean deleteNetwork(String networkId){
-        return null;
+        return networkService.deleteNetwork(networkId);
+    }
+
+    @GetMapping("/subnet/list")
+    public List<SubnetVo> getSubnetList(@RequestParam("networkId")String networkId){
+        return networkService.getSubnetList(networkId);
     }
 
     @GetMapping("/server/list")

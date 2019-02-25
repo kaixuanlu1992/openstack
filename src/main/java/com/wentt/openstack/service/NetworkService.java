@@ -9,12 +9,14 @@ import java.util.List;
 public interface NetworkService {
     /**
      * 获取网络信息
+     *
      * @return
      */
     List<NetworkVo> getNetworkList();
 
     /**
      * 获取子网信息
+     *
      * @param networkId
      * @return
      */
@@ -22,8 +24,17 @@ public interface NetworkService {
 
     /**
      * 创建网络
+     *
      * @param dto
      * @return
      */
     String createNetwork(NetworkDto dto);
+
+    /**
+     * 删除网络
+     *
+     * @param networkId
+     * @return
+     */
+    Boolean deleteNetwork(String networkId);
 }

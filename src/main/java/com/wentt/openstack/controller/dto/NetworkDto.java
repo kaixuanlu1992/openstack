@@ -6,6 +6,9 @@ import lombok.Data;
 public class NetworkDto {
     private String name;
     private String tenantId;
+    private String physicalNetwork;
     private String type;
+    private String segmentId;
     private Boolean isShared;
+    private Boolean stateUp;
 }
