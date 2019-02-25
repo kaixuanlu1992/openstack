@@ -8,6 +8,6 @@ public class SubnetVo {
     private String name;
     private String cidr;
     private String ipVersion;
-    private String getway;
+    private String gateway;
     private String addressPool;
 }

@@ -1,6 +1,7 @@
 package com.wentt.openstack.controller;
 
 import com.wentt.openstack.controller.dto.NetworkDto;
+import com.wentt.openstack.controller.dto.SubnetDto;
 import com.wentt.openstack.controller.vo.FlavorVo;
 import com.wentt.openstack.controller.vo.NetworkVo;
 import com.wentt.openstack.controller.vo.ServerVo;
@@ -52,6 +53,16 @@ public class NetworkController {
     @GetMapping("/subnet/list")
     public List<SubnetVo> getSubnetList(@RequestParam("networkId")String networkId){
         return networkService.getSubnetList(networkId);
+    }
+
+    @PostMapping("/subnet")
+    public String createSubnet(SubnetDto subnetDto){
+        return networkService.createSubnet(subnetDto);
+    }
+
+    @DeleteMapping("/subnet/")
+    public void deleteSubnet(List<String> subnetIdList){
+         networkService.deleteSubnet(subnetIdList);
     }
 
     @GetMapping("/server/list")

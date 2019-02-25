@@ -1,6 +1,7 @@
 package com.wentt.openstack.service;
 
 import com.wentt.openstack.controller.dto.NetworkDto;
+import com.wentt.openstack.controller.dto.SubnetDto;
 import com.wentt.openstack.controller.vo.NetworkVo;
 import com.wentt.openstack.controller.vo.SubnetVo;
 
@@ -37,4 +38,18 @@ public interface NetworkService {
      * @return
      */
     Boolean deleteNetwork(String networkId);
+
+    /**
+     * 删除子网
+     * @param subnetIdList
+     * @return
+     */
+    void deleteSubnet(List<String> subnetIdList);
+
+    /**
+     * 创建子网
+     * @param subnetDto
+     * @return
+     */
+    String createSubnet(SubnetDto subnetDto);
 }

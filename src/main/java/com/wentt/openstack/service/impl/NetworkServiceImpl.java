@@ -1,11 +1,14 @@
 package com.wentt.openstack.service.impl;
 
 import com.wentt.openstack.controller.dto.NetworkDto;
+import com.wentt.openstack.controller.dto.SubnetDto;
 import com.wentt.openstack.controller.vo.NetworkVo;
 import com.wentt.openstack.controller.vo.SubnetVo;
 import com.wentt.openstack.service.NetworkService;
 import com.wentt.openstack.util.CommonUitl;
+import org.openstack4j.api.Builders;
 import org.openstack4j.api.OSClient.OSClientV2;
+import org.openstack4j.model.network.IPVersionType;
 import org.openstack4j.model.network.Network;
 import org.springframework.stereotype.Service;
 
@@ -40,7 +43,7 @@ public class NetworkServiceImpl implements NetworkService {
             subnet.setName(item.getName());
             subnet.setCidr(item.getCidr());
             subnet.setIpVersion(item.getIpVersion().name());
-            subnet.setGetway(item.getGateway());
+            subnet.setGateway(item.getGateway());
             subnet.setAddressPool(item.getAllocationPools().toString());
         });
         return rs;
@@ -57,5 +60,27 @@ public class NetworkServiceImpl implements NetworkService {
     public Boolean deleteNetwork(String networkId) {
         OSClientV2 os = CommonUitl.getAuthOs();
         return os.networking().network().delete(networkId).isSuccess();
+    }
+
+    @Override
+    public void deleteSubnet(List<String> subnetIdList) {
+        OSClientV2 os = CommonUitl.getAuthOs();
+        subnetIdList.forEach(id -> {
+            os.networking().subnet().delete(id);
+        });
+    }
+
+    @Override
+    public String createSubnet(SubnetDto subnet) {
+        OSClientV2 os = CommonUitl.getAuthOs();
+        return os.networking().subnet().create(Builders.subnet()
+                .name(subnet.getName())
+                .networkId(subnet.getNetworkId())
+                .tenantId(subnet.getTenantId())
+                .addPool(subnet.getAddressPoolStart(), subnet.getAddressPoolEnd())
+                .ipVersion(IPVersionType.V4)
+                .cidr(subnet.getCidr())
+                .build()).getId();
+
     }
 }
