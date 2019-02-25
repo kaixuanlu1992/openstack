@@ -1,6 +1,7 @@
 package com.wentt.openstack.controller;
 
 import com.wentt.openstack.controller.dto.NetworkDto;
+import com.wentt.openstack.controller.dto.ServerDto;
 import com.wentt.openstack.controller.dto.SubnetDto;
 import com.wentt.openstack.controller.vo.FlavorVo;
 import com.wentt.openstack.controller.vo.NetworkVo;
@@ -8,6 +9,7 @@ import com.wentt.openstack.controller.vo.ServerVo;
 import com.wentt.openstack.controller.vo.SubnetVo;
 import com.wentt.openstack.service.FlavorService;
 import com.wentt.openstack.service.NetworkService;
+import com.wentt.openstack.service.ServerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +25,8 @@ public class NetworkController {
     private NetworkService networkService;
     @Autowired
     private FlavorService flavorService;
+    @Autowired
+    private ServerService serverService;
 
 
     @GetMapping("/network/type/list")
@@ -66,13 +70,13 @@ public class NetworkController {
     }
 
     @GetMapping("/server/list")
-    public List<ServerVo> getServerList(){
-        return null;
+    public List<ServerVo> getServerList(@RequestParam("networkId")String networkId){
+        return serverService.getServerList(networkId);
     }
 
     @PostMapping("/server")
-    public String createServer(){
-        return null;
+    public String createServer(@RequestBody ServerDto serverDto){
+        return serverService.createServer(serverDto);
     }
 
     @PutMapping("/server")
@@ -82,7 +86,7 @@ public class NetworkController {
 
     @DeleteMapping("/server")
     public Boolean deleteServer(String serverId){
-        return null;
+        return serverService.deleteServer(serverId);
     }
 
     @GetMapping("/flavor/list")
