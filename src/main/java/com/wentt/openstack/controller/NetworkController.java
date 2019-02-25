@@ -1,9 +1,11 @@
 package com.wentt.openstack.controller;
 
 import com.wentt.openstack.controller.dto.NetworkDto;
+import com.wentt.openstack.controller.vo.FlavorVo;
 import com.wentt.openstack.controller.vo.NetworkVo;
 import com.wentt.openstack.controller.vo.ServerVo;
 import com.wentt.openstack.controller.vo.SubnetVo;
+import com.wentt.openstack.service.FlavorService;
 import com.wentt.openstack.service.NetworkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,6 +21,9 @@ public class NetworkController {
 
     @Autowired
     private NetworkService networkService;
+    @Autowired
+    private FlavorService flavorService;
+
 
     @GetMapping("/network/type/list")
     public List<String> getNetworkTypeList(HttpServletResponse response) {
@@ -67,5 +72,10 @@ public class NetworkController {
     @DeleteMapping("/server")
     public Boolean deleteServer(String serverId){
         return null;
+    }
+
+    @GetMapping("/flavor/list")
+    public List<FlavorVo> getFlavorList(){
+        return flavorService.getFlavorList();
     }
 }
