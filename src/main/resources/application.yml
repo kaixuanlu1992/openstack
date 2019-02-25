@@ -4,7 +4,7 @@ spring:
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/openstack
     username: root
-    password: 12389
+    password: 123899
     #driver-class-name: com.mysql.jdbc.Driver
 server:
   port: 8000

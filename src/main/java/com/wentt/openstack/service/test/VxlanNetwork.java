@@ -34,8 +34,6 @@ public class VxlanNetwork {
                 .cidr("10.0.7.0/24")
                 .enableDHCP(true)
                 .build());
-
-
     }
 
 }

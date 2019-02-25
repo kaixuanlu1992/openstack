@@ -2,6 +2,7 @@ package com.wentt.openstack.controller;
 
 import com.wentt.openstack.controller.dto.ServerDto;
 import com.wentt.openstack.controller.vo.FlavorVo;
+import com.wentt.openstack.controller.vo.ServerVo;
 import com.wentt.openstack.service.FlavorService;
 import com.wentt.openstack.service.ServerService;
 import io.swagger.annotations.Api;
@@ -19,11 +20,15 @@ public class ServerController {
     private FlavorService flavorService;
     @Autowired
     private ServerService serverService;
-
-    @PostMapping("/server")
-    @ApiOperation("创建实例")
+    @PostMapping("/server/list")
+    @ApiOperation("获取实例列表")
     public String createServer(@RequestBody ServerDto serverDto){
         return serverService.createServer(serverDto);
+    }
+    @PostMapping("/server")
+    @ApiOperation("创建实例")
+    public List<ServerVo> getServerList(@RequestParam("networkId")String networkId){
+        return serverService.getServerList(networkId);
     }
 
     @PutMapping("/server")
