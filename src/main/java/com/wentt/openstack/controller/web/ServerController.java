@@ -1,4 +1,4 @@
-package com.wentt.openstack.controller;
+package com.wentt.openstack.controller.web;
 
 import com.wentt.openstack.controller.dto.ServerDto;
 import com.wentt.openstack.controller.vo.FlavorVo;

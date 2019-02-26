@@ -1,6 +1,6 @@
 package com.wentt.openstack.service.impl;
 
-import com.sun.jmx.remote.internal.ArrayQueue;
+
 import com.wentt.openstack.controller.vo.FlavorVo;
 import com.wentt.openstack.service.FlavorService;
 import com.wentt.openstack.util.CommonUitl;

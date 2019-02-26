@@ -1,4 +1,4 @@
-package com.wentt.openstack.controller;
+package com.wentt.openstack.controller.web;
 
 import com.wentt.openstack.controller.dto.NetworkDto;
 import com.wentt.openstack.controller.dto.SubnetDto;
@@ -71,5 +71,4 @@ public class NetworkController {
     public void deleteSubnet(List<String> subnetIdList) {
         networkService.deleteSubnet(subnetIdList);
     }
-
 }
