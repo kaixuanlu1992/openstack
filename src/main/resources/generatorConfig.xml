@@ -21,21 +21,21 @@
         </commentGenerator>
         <jdbcConnection
                 driverClass="com.mysql.jdbc.Driver"
-                connectionURL="jdbc:mysql://localhost:3306/test?characterEncoding=utf-8"
+                connectionURL="jdbc:mysql://localhost:3306/openstack?characterEncoding=utf-8"
                 userId="root"
-                password="kaixuanlu"/>
+                password="123456"/>
 
         <!-- 生成POJO对象，并将类放到com.songguoliang.springboot.entity包下 -->
-        <javaModelGenerator targetPackage="com.openstack_4j.network.model" targetProject="src/main/java"></javaModelGenerator>
+        <javaModelGenerator targetPackage="com.wentt.openstack.model" targetProject="src/main/java"></javaModelGenerator>
         <!-- 生成mapper xml文件，并放到resources下的mapper文件夹下 -->
         <sqlMapGenerator targetPackage="mapper"  targetProject="src/main/resources"></sqlMapGenerator>
 
 
         <!-- 生成mapper xml对应dao接口，放到com.songguoliang.springboot.mapper包下-->
-        <javaClientGenerator targetPackage="com.openstack_4j.network.dao" targetProject="src/main/java" type="XMLMAPPER"></javaClientGenerator>
+        <javaClientGenerator targetPackage="com.wentt.openstack.dao" targetProject="src/main/java" type="XMLMAPPER"></javaClientGenerator>
 
         <!-- table标签可以有多个，至少一个，tableName指定表名，可以使用_和%通配符 -->
-        <table tableName="employee">
+        <table tableName="user">
             <!-- 是否只生成POJO对象 -->
             <property name="modelOnly" value="false"/>
         </table>
