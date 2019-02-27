@@ -35,7 +35,7 @@
         <javaClientGenerator targetPackage="com.wentt.openstack.dao" targetProject="src/main/java" type="XMLMAPPER"></javaClientGenerator>
 
         <!-- table标签可以有多个，至少一个，tableName指定表名，可以使用_和%通配符 -->
-        <table tableName="user">
+        <table tableName="t_network_server_map">
             <!-- 是否只生成POJO对象 -->
             <property name="modelOnly" value="false"/>
         </table>

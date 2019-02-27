@@ -5,10 +5,13 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/openstack
     username: root
     password: 123899
-    #driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.jdbc.Driver
 server:
   port: 8000
 network:
   type: LOCAL,FLAT,VLAN,VXLAN,GRE
+
+mybatis:
+  mapper-locations: classpath:/mapper/*.xml
 
 

@@ -20,13 +20,14 @@ public class ServerController {
     private FlavorService flavorService;
     @Autowired
     private ServerService serverService;
-    @PostMapping("/server/list")
-    @ApiOperation("获取实例列表")
+    @PostMapping("/server")
+    @ApiOperation("创建实例")
     public String createServer(@RequestBody ServerDto serverDto){
         return serverService.createServer(serverDto);
     }
-    @PostMapping("/server")
-    @ApiOperation("创建实例")
+
+    @GetMapping("/server/list")
+    @ApiOperation("获取实例列表")
     public List<ServerVo> getServerList(@RequestParam("networkId")String networkId){
         return serverService.getServerList(networkId);
     }
