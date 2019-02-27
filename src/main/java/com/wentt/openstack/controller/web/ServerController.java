@@ -2,6 +2,7 @@ package com.wentt.openstack.controller.web;
 
 import com.wentt.openstack.controller.dto.ServerDto;
 import com.wentt.openstack.controller.vo.FlavorVo;
+import com.wentt.openstack.controller.vo.ImageVo;
 import com.wentt.openstack.controller.vo.ServerVo;
 import com.wentt.openstack.service.FlavorService;
 import com.wentt.openstack.service.ServerService;
@@ -48,5 +49,11 @@ public class ServerController {
     @ApiOperation("flavor列表")
     public List<FlavorVo> getFlavorList(){
         return flavorService.getFlavorList();
+    }
+
+    @GetMapping("/image/list")
+    @ApiOperation("image列表")
+    public List<ImageVo> getImageList(){
+        return flavorService.getImageList();
     }
 }

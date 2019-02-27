@@ -4,6 +4,7 @@ import com.wentt.openstack.controller.dto.NetworkDto;
 import com.wentt.openstack.controller.dto.NetworkUpdateDto;
 import com.wentt.openstack.controller.dto.SubnetDto;
 import com.wentt.openstack.controller.vo.NetworkVo;
+import com.wentt.openstack.controller.vo.RouterVo;
 import com.wentt.openstack.controller.vo.SubnetVo;
 import com.wentt.openstack.service.NetworkService;
 import io.swagger.annotations.Api;
@@ -72,4 +73,16 @@ public class NetworkController {
     public void deleteSubnet(List<String> subnetIdList) {
         networkService.deleteSubnet(subnetIdList);
     }
+
+    @PostMapping("/router/")
+    @ApiOperation("创建路由器")
+    public String createRouter(@RequestBody RouterVo routerVo) {
+        return networkService.createRouter(routerVo);
+    }
+
+//    @GetMapping("/router/list")
+//    @ApiOperation("获取路由器列表")
+//    public List<RouterVo> getRouterList() {
+//        return networkService.createRouter(routerVo);
+//    }
 }

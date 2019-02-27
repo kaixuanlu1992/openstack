@@ -4,15 +4,15 @@ import com.wentt.openstack.controller.dto.NetworkDto;
 import com.wentt.openstack.controller.dto.NetworkUpdateDto;
 import com.wentt.openstack.controller.dto.SubnetDto;
 import com.wentt.openstack.controller.vo.NetworkVo;
+import com.wentt.openstack.controller.vo.RouterVo;
 import com.wentt.openstack.controller.vo.SubnetVo;
 import com.wentt.openstack.service.NetworkService;
 import com.wentt.openstack.util.CommonUitl;
 import org.openstack4j.api.Builders;
 import org.openstack4j.api.OSClient.OSClientV2;
+import org.openstack4j.model.network.AttachInterfaceType;
 import org.openstack4j.model.network.IPVersionType;
 import org.openstack4j.model.network.Network;
-import org.openstack4j.model.network.NetworkUpdate;
-import org.openstack4j.model.network.builder.NetworkUpdateBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -93,4 +93,39 @@ public class NetworkServiceImpl implements NetworkService {
                         .shared(dto.getIsShared())
                         .build());
     }
+
+    @Override
+    public String createRouter(RouterVo routerVo) {
+        return os.networking().router().create(Builders.router()
+                .adminStateUp(routerVo.getIsAdminUp())
+                .name(routerVo.getName())
+                .build()).getId();
+    }
+
+    /**
+     * 连接子网到路由器
+     *
+     * @param routerId
+     * @param subnetId
+     */
+    public void concatSubnetToRouter(String routerId, String subnetId) {
+        os.networking().router().attachInterface(routerId, AttachInterfaceType.SUBNET, subnetId);
+    }
+
+    /**
+     * 获取路由器列表
+     *
+     * @return
+     */
+    public List<RouterVo> getRouterList() {
+        List<RouterVo> rs = new ArrayList<>();
+        os.networking().router().list().forEach(item -> {
+            RouterVo routerVo = new RouterVo();
+            routerVo.setId(item.getId());
+            routerVo.setName(item.getName());
+            routerVo.setIsAdminUp(item.isAdminStateUp());
+        });
+        return rs;
+    }
+
 }

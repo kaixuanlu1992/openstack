@@ -4,6 +4,7 @@ import com.wentt.openstack.controller.dto.NetworkDto;
 import com.wentt.openstack.controller.dto.NetworkUpdateDto;
 import com.wentt.openstack.controller.dto.SubnetDto;
 import com.wentt.openstack.controller.vo.NetworkVo;
+import com.wentt.openstack.controller.vo.RouterVo;
 import com.wentt.openstack.controller.vo.SubnetVo;
 
 import java.util.List;
@@ -60,4 +61,9 @@ public interface NetworkService {
      * @return
      */
     void updateNetwork(NetworkUpdateDto dto);
+
+    /**
+     * 创建路由器
+     */
+    String createRouter(RouterVo routerVo);
 }
