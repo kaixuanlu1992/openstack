@@ -1,6 +1,7 @@
 package com.wentt.openstack.service;
 
 import com.wentt.openstack.controller.dto.NetworkDto;
+import com.wentt.openstack.controller.dto.NetworkUpdateDto;
 import com.wentt.openstack.controller.dto.SubnetDto;
 import com.wentt.openstack.controller.vo.NetworkVo;
 import com.wentt.openstack.controller.vo.SubnetVo;
@@ -52,4 +53,11 @@ public interface NetworkService {
      * @return
      */
     String createSubnet(SubnetDto subnetDto);
+
+    /**
+     * 更新网络
+     * @param dto
+     * @return
+     */
+    void updateNetwork(NetworkUpdateDto dto);
 }

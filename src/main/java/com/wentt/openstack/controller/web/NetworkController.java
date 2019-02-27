@@ -1,6 +1,7 @@
 package com.wentt.openstack.controller.web;
 
 import com.wentt.openstack.controller.dto.NetworkDto;
+import com.wentt.openstack.controller.dto.NetworkUpdateDto;
 import com.wentt.openstack.controller.dto.SubnetDto;
 import com.wentt.openstack.controller.vo.NetworkVo;
 import com.wentt.openstack.controller.vo.SubnetVo;
@@ -44,8 +45,8 @@ public class NetworkController {
 
     @PutMapping("/network")
     @ApiOperation("更新网络")
-    public String updateNetwork() {
-        return null;
+    public void updateNetwork(@RequestBody NetworkUpdateDto dto) {
+        networkService.updateNetwork(dto);
     }
 
     @DeleteMapping("/network")

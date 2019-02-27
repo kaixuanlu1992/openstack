@@ -1,6 +1,7 @@
 package com.wentt.openstack.service.impl;
 
 import com.wentt.openstack.controller.dto.NetworkDto;
+import com.wentt.openstack.controller.dto.NetworkUpdateDto;
 import com.wentt.openstack.controller.dto.SubnetDto;
 import com.wentt.openstack.controller.vo.NetworkVo;
 import com.wentt.openstack.controller.vo.SubnetVo;
@@ -10,6 +11,9 @@ import org.openstack4j.api.Builders;
 import org.openstack4j.api.OSClient.OSClientV2;
 import org.openstack4j.model.network.IPVersionType;
 import org.openstack4j.model.network.Network;
+import org.openstack4j.model.network.NetworkUpdate;
+import org.openstack4j.model.network.builder.NetworkUpdateBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,10 +21,12 @@ import java.util.List;
 
 @Service
 public class NetworkServiceImpl implements NetworkService {
+    @Autowired
+    private OSClientV2 os;
+
     @Override
     public List<NetworkVo> getNetworkList() {
         List<NetworkVo> rs = new ArrayList<>();
-        OSClientV2 os = CommonUitl.getAuthOs();
         os.networking().network().list().forEach(item -> {
             NetworkVo temp = new NetworkVo();
             temp.setName(item.getName());
@@ -36,7 +42,6 @@ public class NetworkServiceImpl implements NetworkService {
     @Override
     public List<SubnetVo> getSubnetList(String networkId) {
         List<SubnetVo> rs = new ArrayList<>();
-        OSClientV2 os = CommonUitl.getAuthOs();
         os.networking().network().get(networkId).getNeutronSubnets().forEach(item -> {
             SubnetVo subnet = new SubnetVo();
             subnet.setId(item.getId());
@@ -51,20 +56,17 @@ public class NetworkServiceImpl implements NetworkService {
 
     @Override
     public String createNetwork(NetworkDto dto) {
-        OSClientV2 os = CommonUitl.getAuthOs();
         Network network = CommonUitl.createNetwork(os, dto);
         return network.getId();
     }
 
     @Override
     public Boolean deleteNetwork(String networkId) {
-        OSClientV2 os = CommonUitl.getAuthOs();
         return os.networking().network().delete(networkId).isSuccess();
     }
 
     @Override
     public void deleteSubnet(List<String> subnetIdList) {
-        OSClientV2 os = CommonUitl.getAuthOs();
         subnetIdList.forEach(id -> {
             os.networking().subnet().delete(id);
         });
@@ -72,7 +74,6 @@ public class NetworkServiceImpl implements NetworkService {
 
     @Override
     public String createSubnet(SubnetDto subnet) {
-        OSClientV2 os = CommonUitl.getAuthOs();
         return os.networking().subnet().create(Builders.subnet()
                 .name(subnet.getName())
                 .networkId(subnet.getNetworkId())
@@ -81,6 +82,15 @@ public class NetworkServiceImpl implements NetworkService {
                 .ipVersion(IPVersionType.V4)
                 .cidr(subnet.getCidr())
                 .build()).getId();
+    }
 
+    @Override
+    public void updateNetwork(NetworkUpdateDto dto) {
+        os.networking().network().update(dto.getId(),
+                Builders.networkUpdate()
+                        .adminStateUp(dto.getStateUp())
+                        .name(dto.getName())
+                        .shared(dto.getIsShared())
+                        .build());
     }
 }
