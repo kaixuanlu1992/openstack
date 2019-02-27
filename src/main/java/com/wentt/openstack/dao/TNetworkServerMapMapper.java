@@ -1,5 +1,6 @@
 package com.wentt.openstack.dao;
 
+import com.wentt.openstack.controller.dto.NetworkServerCountDto;
 import com.wentt.openstack.model.TNetworkServerMap;
 import com.wentt.openstack.model.TNetworkServerMapExample;
 
@@ -65,4 +66,6 @@ public interface TNetworkServerMapMapper {
      * @mbggenerated
      */
     int updateByExample(@Param("record") TNetworkServerMap record, @Param("example") TNetworkServerMapExample example);
+
+    List<NetworkServerCountDto> getNetworkServerCount();
 }

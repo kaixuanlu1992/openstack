@@ -1,6 +1,7 @@
 package com.wentt.openstack.controller.vo;
 
 import lombok.Data;
+import org.openstack4j.model.network.State;
 
 @Data
 public class NetworkVo {
@@ -10,4 +11,9 @@ public class NetworkVo {
     private String tenantName;
     private String type;
     private Boolean isShared;
+    private Boolean isAdminStateUp;
+    private State state;
+    private Boolean isShare;
+    private Integer subnetNumber;
+    private Integer serverNumber;
 }

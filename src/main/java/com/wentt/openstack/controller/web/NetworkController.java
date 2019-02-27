@@ -34,7 +34,8 @@ public class NetworkController {
 
     @GetMapping("/network/list")
     @ApiOperation("获取网络列表")
-    public List<NetworkVo> getNetworkList() {
+    public List<NetworkVo> getNetworkList(HttpServletResponse response) {
+        response.setHeader("Access-Control-Allow-Origin", "*");
         return networkService.getNetworkList();
     }
 

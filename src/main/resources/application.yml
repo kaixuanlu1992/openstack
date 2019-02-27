@@ -2,10 +2,11 @@ spring:
   application:
     name: openstack
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/openstack
+    url: jdbc:mysql://127.0.0.1:3306/openstack?characterEncoding=utf-8&&useSSL=false
     username: root
-    password: 123899
+    password: 123456
     driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
 server:
   port: 8000
 network:
