@@ -34,10 +34,10 @@ public class UserController {
         return tUserService.getUserList();
     }
 
-    @PutMapping("/server")
+    @PutMapping("/user")
     @ApiOperation("更新用户")
-    public String updateUseR(){
-        return null;
+    public String updateUse(UserDto userDto){
+        return tUserService.updateUser(userDto);
     }
 
     @DeleteMapping("/server")

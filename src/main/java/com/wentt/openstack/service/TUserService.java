@@ -11,4 +11,6 @@ public interface TUserService {
     List<UserVo> getUserList();
 
     Boolean deleteServer(String userId);
+
+    String updateUser(UserDto userDto);
 }
