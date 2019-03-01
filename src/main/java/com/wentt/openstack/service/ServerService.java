@@ -1,11 +1,13 @@
 package com.wentt.openstack.service;
 
 import com.wentt.openstack.controller.dto.ServerDto;
+import com.wentt.openstack.controller.dto.ServerUpdateDto;
 import com.wentt.openstack.controller.vo.ServerVo;
 
 import java.util.List;
 
 public interface ServerService {
+    String updateServer(ServerUpdateDto serverUpdateDto);
     /**
      * 获取实例列表
      * @param networkId

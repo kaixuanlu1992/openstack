@@ -40,7 +40,7 @@ public class CommonUitl {
         return os.compute().servers().boot(sc);
     }
 
-    public static Network createNetwork(OSClientV2 os, NetworkDto dto) {
+    public static Network createNetwork(OSClientV2 os, NetworkDto dto) throws Exception {
         if ("LOCAL".equals(dto.getType())) {
             return createLocalNetwork(os, dto);
         } else if ("FLAT".equals(dto.getType())) {
@@ -49,8 +49,10 @@ public class CommonUitl {
             return createVlanNetwork(os, dto);
         } else if ("VXLAN".equals(dto.getType())) {
             return createVXlanNetwork(os, dto);
+        } else if ("GRE".equals(dto.getType())){
+            return createGRENetwork(os, dto);
         } else {
-            return null;
+            throw new Exception("网络类型参数输入错误");
         }
     }
 
@@ -96,6 +98,18 @@ public class CommonUitl {
                         .name(dto.getName())
                         .tenantId(dto.getTenantId())
                         .networkType(NetworkType.VXLAN)
+                        .segmentId(dto.getSegmentId())
+                        .adminStateUp(dto.getStateUp())
+                        .isShared(dto.getIsShared())
+                        .build());
+    }
+
+    private static Network createGRENetwork(OSClientV2 os, NetworkDto dto) {
+        return os.networking().network()
+                .create(Builders.network()
+                        .name(dto.getName())
+                        .tenantId(dto.getTenantId())
+                        .networkType(NetworkType.GRE)
                         .segmentId(dto.getSegmentId())
                         .adminStateUp(dto.getStateUp())
                         .isShared(dto.getIsShared())

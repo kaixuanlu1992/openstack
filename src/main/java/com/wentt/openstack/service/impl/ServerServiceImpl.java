@@ -1,6 +1,7 @@
 package com.wentt.openstack.service.impl;
 
 import com.wentt.openstack.controller.dto.ServerDto;
+import com.wentt.openstack.controller.dto.ServerUpdateDto;
 import com.wentt.openstack.controller.vo.ServerVo;
 import com.wentt.openstack.dao.TNetworkServerMapMapper;
 import com.wentt.openstack.model.TNetworkServerMap;
@@ -11,6 +12,7 @@ import org.openstack4j.api.Builders;
 import org.openstack4j.api.OSClient.OSClientV2;
 import org.openstack4j.model.compute.Server;
 import org.openstack4j.model.compute.ServerCreate;
+import org.openstack4j.model.compute.ServerUpdateOptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -26,6 +28,14 @@ public class ServerServiceImpl implements ServerService {
     private OSClientV2 os;
     @Autowired
     private TNetworkServerMapMapper tNetworkServerMapMapper;
+
+    @Override
+    public String updateServer(ServerUpdateDto serverUpdateDto) {
+        OSClientV2 os = CommonUitl.getAuthOs();
+        return os.compute().servers().update(serverUpdateDto.getId(),
+                ServerUpdateOptions.create().name(serverUpdateDto.getName()))
+                .getId();
+    }
 
     @Override
     public List<ServerVo> getServerList(String networkId) {
@@ -80,7 +90,7 @@ public class ServerServiceImpl implements ServerService {
 
     @Override
     public String getConsoleUrl(String serverId) {
-        OSClientV2 os= CommonUitl.getAuthOs();
-        return os.compute().servers().getVNCConsole(serverId,null).getURL();
+        OSClientV2 os = CommonUitl.getAuthOs();
+        return os.compute().servers().getVNCConsole(serverId, null).getURL();
     }
 }
