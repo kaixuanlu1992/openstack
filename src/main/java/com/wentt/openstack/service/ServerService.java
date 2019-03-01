@@ -26,4 +26,11 @@ public interface ServerService {
      * @return
      */
     Boolean deleteServer(String serverId);
+
+    /**
+     * 获取主机控制台地址
+     * @param serverId
+     * @return
+     */
+    String getConsoleUrl(String serverId);
 }

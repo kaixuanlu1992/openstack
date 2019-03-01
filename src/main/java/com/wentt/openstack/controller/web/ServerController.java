@@ -56,4 +56,10 @@ public class ServerController {
     public List<ImageVo> getImageList(){
         return flavorService.getImageList();
     }
+
+    @GetMapping("/server/url")
+    @ApiOperation("主机控制台地址")
+    public String getConsleUrl(String serverId){
+        return serverService.getConsoleUrl(serverId);
+    }
 }

@@ -6,6 +6,7 @@ import com.wentt.openstack.dao.TNetworkServerMapMapper;
 import com.wentt.openstack.model.TNetworkServerMap;
 import com.wentt.openstack.model.TNetworkServerMapExample;
 import com.wentt.openstack.service.ServerService;
+import com.wentt.openstack.util.CommonUitl;
 import org.openstack4j.api.Builders;
 import org.openstack4j.api.OSClient.OSClientV2;
 import org.openstack4j.model.compute.Server;
@@ -75,5 +76,11 @@ public class ServerServiceImpl implements ServerService {
     @Override
     public Boolean deleteServer(String serverId) {
         return os.compute().servers().delete(serverId).isSuccess();
+    }
+
+    @Override
+    public String getConsoleUrl(String serverId) {
+        OSClientV2 os= CommonUitl.getAuthOs();
+        return os.compute().servers().getVNCConsole(serverId,null).getURL();
     }
 }
