@@ -6,7 +6,6 @@ import lombok.Data;
 public class SubnetDto {
     private String name;
     private String networkId;
-    private String tenantId;
     private String cidr;
     private String ipVersion;
     private String gateway;

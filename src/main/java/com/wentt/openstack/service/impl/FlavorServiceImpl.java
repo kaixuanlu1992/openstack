@@ -16,8 +16,7 @@ import java.util.List;
 
 @Service
 public class FlavorServiceImpl implements FlavorService {
-    @Autowired
-    private OSClientV2 os;
+
     @Override
     public List<FlavorVo> getFlavorList() {
         List<FlavorVo> rs = new ArrayList<>();
@@ -32,6 +31,7 @@ public class FlavorServiceImpl implements FlavorService {
 
     @Override
     public List<ImageVo> getImageList() {
+        OSClientV2 os = CommonUitl.getAuthOs();
         List<? extends Image> images =os.images().list();
         List<ImageVo> rs=new ArrayList<>();
         if (!CollectionUtils.isEmpty(images)){

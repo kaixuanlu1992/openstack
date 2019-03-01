@@ -34,7 +34,7 @@ public class UserController {
         return tUserService.updateUser(userDto);
     }
 
-    @DeleteMapping("/server")
+    @DeleteMapping("/user")
     @ApiOperation("删除用户")
     public Boolean deleteUser(String userId){
         return tUserService.deleteServer(userId);

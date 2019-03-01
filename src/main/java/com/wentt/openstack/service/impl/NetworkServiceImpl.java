@@ -27,8 +27,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class NetworkServiceImpl implements NetworkService {
-    @Autowired
-    private OSClientV2 os;
+
     @Autowired
     private TNetworkServerMapMapper tNetworkServerMapMapper;
 
@@ -62,6 +61,7 @@ public class NetworkServiceImpl implements NetworkService {
 
     @Override
     public List<SubnetVo> getSubnetList(String networkId) {
+        OSClientV2 os = CommonUitl.getAuthOs();
         List<SubnetVo> rs = new ArrayList<>();
         os.networking().network().get(networkId).getNeutronSubnets().forEach(item -> {
             SubnetVo subnet = new SubnetVo();
@@ -70,35 +70,39 @@ public class NetworkServiceImpl implements NetworkService {
             subnet.setCidr(item.getCidr());
             subnet.setIpVersion(item.getIpVersion().name());
             subnet.setGateway(item.getGateway());
-            subnet.setAddressPool(item.getAllocationPools().toString());
+            String ipPool=item.getAllocationPools().toString().replaceAll("[a-zA-Z={}\\[\\]]","");
+            subnet.setAddressPoolStart(ipPool.split(",")[0]);
+            subnet.setAddressPoolEnd(ipPool.split(",")[1]);
+            rs.add(subnet);
         });
         return rs;
     }
 
     @Override
     public String createNetwork(NetworkDto dto) throws Exception {
+        OSClientV2 os = CommonUitl.getAuthOs();
         Network network = CommonUitl.createNetwork(os, dto);
         return network.getId();
     }
 
     @Override
     public Boolean deleteNetwork(String networkId) {
+        OSClientV2 os = CommonUitl.getAuthOs();
         return os.networking().network().delete(networkId).isSuccess();
     }
 
     @Override
-    public void deleteSubnet(List<String> subnetIdList) {
-        subnetIdList.forEach(id -> {
-            os.networking().subnet().delete(id);
-        });
+    public Boolean deleteSubnet(String id) {
+        OSClientV2 os = CommonUitl.getAuthOs();
+        return os.networking().subnet().delete(id).isSuccess();
     }
 
     @Override
     public String createSubnet(SubnetDto subnet) {
+        OSClientV2 os = CommonUitl.getAuthOs();
         return os.networking().subnet().create(Builders.subnet()
                 .name(subnet.getName())
                 .networkId(subnet.getNetworkId())
-                .tenantId(subnet.getTenantId())
                 .addPool(subnet.getAddressPoolStart(), subnet.getAddressPoolEnd())
                 .ipVersion(IPVersionType.V4)
                 .cidr(subnet.getCidr())
@@ -107,6 +111,7 @@ public class NetworkServiceImpl implements NetworkService {
 
     @Override
     public void updateNetwork(NetworkUpdateDto dto) {
+        OSClientV2 os = CommonUitl.getAuthOs();
         os.networking().network().update(dto.getId(),
                 Builders.networkUpdate()
                         .adminStateUp(dto.getStateUp())

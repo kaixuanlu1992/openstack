@@ -9,5 +9,6 @@ public class SubnetVo {
     private String cidr;
     private String ipVersion;
     private String gateway;
-    private String addressPool;
+    private String addressPoolStart;
+    private String addressPoolEnd;
 }

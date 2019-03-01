@@ -24,8 +24,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class ServerServiceImpl implements ServerService {
-    @Autowired
-    private OSClientV2 os;
+
     @Autowired
     private TNetworkServerMapMapper tNetworkServerMapMapper;
 
@@ -39,6 +38,7 @@ public class ServerServiceImpl implements ServerService {
 
     @Override
     public List<ServerVo> getServerList(String networkId) {
+
         List<ServerVo> rs = new ArrayList<>();
         TNetworkServerMapExample example = new TNetworkServerMapExample();
         example.createCriteria().andNetworkIdEqualTo(networkId);
@@ -48,15 +48,17 @@ public class ServerServiceImpl implements ServerService {
         }
 
         List<String> serverIdList = tNetworkServerList.stream().map(TNetworkServerMap::getServerId).collect(Collectors.toList());
-
+        OSClientV2 os = CommonUitl.getAuthOs();
         serverIdList.forEach(item -> {
             Server server = os.compute().servers().get(item);
             ServerVo serverVo = new ServerVo();
             serverVo.setId(server.getId());
             serverVo.setName(server.getName());
-            serverVo.setIpAddress(server.getAccessIPv4());
-            serverVo.setFlavor(server.getFlavor().getName());
-            serverVo.setImage(server.getImage().getName());
+            serverVo.setIpAddress(server.getHostId());
+            serverVo.setCreateTime(server.getCreated());
+            serverVo.setImageName(server.getImage().getName());
+            serverVo.setState(server.getStatus().name());
+            serverVo.setPowerState(server.getPowerState());
             rs.add(serverVo);
         });
         return rs;
@@ -64,6 +66,7 @@ public class ServerServiceImpl implements ServerService {
 
     @Override
     public String createServer(ServerDto serverDto) {
+        OSClientV2 os = CommonUitl.getAuthOs();
         ServerCreate sc = Builders.server()
                 .name(serverDto.getName())
                 .flavor(serverDto.getFlavorId())
@@ -85,6 +88,7 @@ public class ServerServiceImpl implements ServerService {
 
     @Override
     public Boolean deleteServer(String serverId) {
+        OSClientV2 os = CommonUitl.getAuthOs();
         return os.compute().servers().delete(serverId).isSuccess();
     }
 

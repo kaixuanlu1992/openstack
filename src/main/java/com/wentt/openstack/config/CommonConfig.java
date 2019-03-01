@@ -7,8 +7,8 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class CommonConfig {
-    @Bean
-    public OSClientV2 osClientV2(){
-        return CommonUitl.getAuthOs();
-    }
+//    @Bean
+//    public OSClientV2 osClientV2(){
+//        return CommonUitl.getAuthOs();
+//    }
 }

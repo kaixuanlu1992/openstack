@@ -46,7 +46,7 @@ public interface NetworkService {
      * @param subnetIdList
      * @return
      */
-    void deleteSubnet(List<String> subnetIdList);
+    Boolean deleteSubnet(String subnetIdList);
 
     /**
      * 创建子网

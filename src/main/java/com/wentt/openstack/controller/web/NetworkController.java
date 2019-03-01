@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -41,7 +42,7 @@ public class NetworkController {
 
     @PostMapping("/network")
     @ApiOperation("创建网络")
-    public String createNetwork(@RequestBody NetworkDto dto) {
+    public String createNetwork(@RequestBody NetworkDto dto) throws Exception {
         return networkService.createNetwork(dto);
     }
 
@@ -60,19 +61,26 @@ public class NetworkController {
     @GetMapping("/subnet/list")
     @ApiOperation("获取子网列表")
     public List<SubnetVo> getSubnetList(@RequestParam("networkId") String networkId) {
+        List<SubnetVo>rs=new ArrayList<>();
+        SubnetVo subnetVo=new SubnetVo();
+        subnetVo.setId("1111111");
+        subnetVo.setName("2222222222");
+        rs.add(subnetVo);
+        //return rs;
         return networkService.getSubnetList(networkId);
     }
 
     @PostMapping("/subnet")
     @ApiOperation("创建子网")
-    public String createSubnet(SubnetDto subnetDto) {
+    public String createSubnet(@RequestBody SubnetDto subnetDto) {
+        //return "111";
         return networkService.createSubnet(subnetDto);
     }
 
     @DeleteMapping("/subnet/")
     @ApiOperation("删除子网")
-    public void deleteSubnet(List<String> subnetIdList) {
-        networkService.deleteSubnet(subnetIdList);
+    public Boolean deleteSubnet(String id) {
+        return networkService.deleteSubnet(id);
     }
 
 
