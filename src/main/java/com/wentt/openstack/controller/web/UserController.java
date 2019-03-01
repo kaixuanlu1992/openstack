@@ -1,13 +1,7 @@
 package com.wentt.openstack.controller.web;
 
-import com.wentt.openstack.controller.dto.ServerDto;
 import com.wentt.openstack.controller.dto.UserDto;
-import com.wentt.openstack.controller.vo.FlavorVo;
-import com.wentt.openstack.controller.vo.ImageVo;
-import com.wentt.openstack.controller.vo.ServerVo;
 import com.wentt.openstack.controller.vo.UserVo;
-import com.wentt.openstack.service.FlavorService;
-import com.wentt.openstack.service.ServerService;
 import com.wentt.openstack.service.TUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
