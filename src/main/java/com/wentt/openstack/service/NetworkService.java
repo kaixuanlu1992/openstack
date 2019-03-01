@@ -31,7 +31,7 @@ public interface NetworkService {
      * @param dto
      * @return
      */
-    String createNetwork(NetworkDto dto);
+    String createNetwork(NetworkDto dto) throws Exception;
 
     /**
      * 删除网络
@@ -62,8 +62,5 @@ public interface NetworkService {
      */
     void updateNetwork(NetworkUpdateDto dto);
 
-    /**
-     * 创建路由器
-     */
-    String createRouter(RouterVo routerVo);
+
 }

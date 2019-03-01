@@ -76,7 +76,7 @@ public class NetworkServiceImpl implements NetworkService {
     }
 
     @Override
-    public String createNetwork(NetworkDto dto) {
+    public String createNetwork(NetworkDto dto) throws Exception {
         Network network = CommonUitl.createNetwork(os, dto);
         return network.getId();
     }
@@ -115,38 +115,10 @@ public class NetworkServiceImpl implements NetworkService {
                         .build());
     }
 
-    @Override
-    public String createRouter(RouterVo routerVo) {
-        return os.networking().router().create(Builders.router()
-                .adminStateUp(routerVo.getIsAdminUp())
-                .name(routerVo.getName())
-                .build()).getId();
-    }
 
-    /**
-     * 连接子网到路由器
-     *
-     * @param routerId
-     * @param subnetId
-     */
-    public void concatSubnetToRouter(String routerId, String subnetId) {
-        os.networking().router().attachInterface(routerId, AttachInterfaceType.SUBNET, subnetId);
-    }
 
-    /**
-     * 获取路由器列表
-     *
-     * @return
-     */
-    public List<RouterVo> getRouterList() {
-        List<RouterVo> rs = new ArrayList<>();
-        os.networking().router().list().forEach(item -> {
-            RouterVo routerVo = new RouterVo();
-            routerVo.setId(item.getId());
-            routerVo.setName(item.getName());
-            routerVo.setIsAdminUp(item.isAdminStateUp());
-        });
-        return rs;
-    }
+
+
+
 
 }

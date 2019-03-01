@@ -75,11 +75,7 @@ public class NetworkController {
         networkService.deleteSubnet(subnetIdList);
     }
 
-    @PostMapping("/router/")
-    @ApiOperation("创建路由器")
-    public String createRouter(@RequestBody RouterVo routerVo) {
-        return networkService.createRouter(routerVo);
-    }
+
 
 //    @GetMapping("/router/list")
 //    @ApiOperation("获取路由器列表")
