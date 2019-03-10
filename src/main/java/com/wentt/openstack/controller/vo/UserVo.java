@@ -10,4 +10,5 @@ public class UserVo {
     private String tenantName;
     private Boolean state;
     private String password;
+
 }

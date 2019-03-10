@@ -37,8 +37,15 @@ public class FlavorServiceImpl implements FlavorService {
         if (!CollectionUtils.isEmpty(images)){
             images.forEach(item->{
                 ImageVo image=new ImageVo();
-                image.setId(image.getId());
-                image.setName(image.getName());
+                image.setId(item.getId());
+                image.setName(item.getName());
+                image.setIsProtected(item.isProtected());
+                image.setCreateTime(item.getCreatedAt());
+                image.setType("镜像");
+                image.setState(item.getStatus().name());
+                image.setIsPublic(item.isPublic());
+                image.setDiskFormat(item.getDiskFormat().name());
+                image.setSize(item.getSize().toString());
                 rs.add(image);
             });
         }
