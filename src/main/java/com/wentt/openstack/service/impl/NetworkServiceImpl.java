@@ -4,6 +4,7 @@ import com.wentt.openstack.controller.dto.NetworkDto;
 import com.wentt.openstack.controller.dto.NetworkServerCountDto;
 import com.wentt.openstack.controller.dto.NetworkUpdateDto;
 import com.wentt.openstack.controller.dto.SubnetDto;
+import com.wentt.openstack.controller.vo.ImageVo;
 import com.wentt.openstack.controller.vo.NetworkVo;
 import com.wentt.openstack.controller.vo.RouterVo;
 import com.wentt.openstack.controller.vo.SubnetVo;
@@ -120,10 +121,38 @@ public class NetworkServiceImpl implements NetworkService {
                         .build());
     }
 
+    @Override
+    public List<ImageVo> getProjectList() {
+        List<ImageVo> rs=new ArrayList<>();
+        OSClientV2 os = CommonUitl.getAuthOs();
+        os.identity().tenants().list().forEach(item->{
+            ImageVo vo=new ImageVo();
+            vo.setId(item.getId());
+            vo.setName(item.getName());
+            rs.add(vo);
+        });
+        return rs;
+    }
 
+    @Override
+    public List<ImageVo> getRoleList() {
+        List<ImageVo> rs=new ArrayList<>();
+        OSClientV2 os = CommonUitl.getAuthOs();
+        os.identity().roles().list().forEach(item->{
+            ImageVo vo=new ImageVo();
+            vo.setId(item.getId());
+            vo.setName(item.getName());
+            rs.add(vo);
+        });
+        return rs;
+    }
 
-
-
+    @Override
+    public List<String> getPhysicalList() {
+        List<String> rs=new ArrayList<>();
+        rs.add("default");
+        return rs;
+    }
 
 
 }

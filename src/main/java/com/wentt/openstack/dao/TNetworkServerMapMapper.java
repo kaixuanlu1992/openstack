@@ -68,4 +68,6 @@ public interface TNetworkServerMapMapper {
     int updateByExample(@Param("record") TNetworkServerMap record, @Param("example") TNetworkServerMapExample example);
 
     List<NetworkServerCountDto> getNetworkServerCount();
+
+
 }

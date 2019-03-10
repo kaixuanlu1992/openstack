@@ -8,6 +8,6 @@ public class UserVo {
     private String name;
     private String email;
     private String tenantName;
-    private Boolean enable;
-    //private String password;
+    private Boolean state;
+    private String password;
 }

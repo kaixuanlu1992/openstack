@@ -3,6 +3,7 @@ package com.wentt.openstack.controller.web;
 import com.wentt.openstack.controller.dto.NetworkDto;
 import com.wentt.openstack.controller.dto.NetworkUpdateDto;
 import com.wentt.openstack.controller.dto.SubnetDto;
+import com.wentt.openstack.controller.vo.ImageVo;
 import com.wentt.openstack.controller.vo.NetworkVo;
 import com.wentt.openstack.controller.vo.RouterVo;
 import com.wentt.openstack.controller.vo.SubnetVo;
@@ -48,8 +49,9 @@ public class NetworkController {
 
     @PutMapping("/network")
     @ApiOperation("更新网络")
-    public void updateNetwork(@RequestBody NetworkUpdateDto dto) {
+    public Boolean updateNetwork(@RequestBody NetworkUpdateDto dto) {
         networkService.updateNetwork(dto);
+        return true;
     }
 
     @DeleteMapping("/network")
@@ -75,6 +77,24 @@ public class NetworkController {
     public String createSubnet(@RequestBody SubnetDto subnetDto) {
         //return "111";
         return networkService.createSubnet(subnetDto);
+    }
+
+    @GetMapping("/project/list")
+    @ApiOperation("项目列表")
+    public List<ImageVo> getProjectList() {
+        return networkService.getProjectList();
+    }
+
+    @GetMapping("/role/list")
+    @ApiOperation("角色列表")
+    public List<ImageVo> getRoleList() {
+        return networkService.getRoleList();
+    }
+
+    @GetMapping("/physical/list")
+    @ApiOperation("物理网络列表")
+    public List<String> getPhysicalList() {
+        return networkService.getPhysicalList();
     }
 
     @DeleteMapping("/subnet/")

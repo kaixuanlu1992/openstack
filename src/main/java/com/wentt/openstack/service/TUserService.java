@@ -13,4 +13,8 @@ public interface TUserService {
     Boolean deleteServer(String userId);
 
     String updateUser(UserDto userDto);
+
+    Boolean enableUser(String userId, Boolean enable);
+
+    String updatePassword(UserDto userDto);
 }

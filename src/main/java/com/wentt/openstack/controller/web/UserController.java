@@ -30,13 +30,25 @@ public class UserController {
 
     @PutMapping("/user")
     @ApiOperation("更新用户")
-    public String updateUse(UserDto userDto){
+    public String updateUse(@RequestBody UserDto userDto){
         return tUserService.updateUser(userDto);
+    }
+
+    @PutMapping("/user/password")
+    @ApiOperation("修改密码")
+    public String updatePassword(@RequestBody UserDto userDto){
+        return tUserService.updatePassword(userDto);
     }
 
     @DeleteMapping("/user")
     @ApiOperation("删除用户")
     public Boolean deleteUser(String userId){
         return tUserService.deleteServer(userId);
+    }
+
+    @GetMapping("/enable")
+    @ApiOperation("禁用用户")
+    public Boolean enableUser(String userId,Boolean enable){
+        return tUserService.enableUser(userId,enable);
     }
 }

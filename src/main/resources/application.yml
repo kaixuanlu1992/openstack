@@ -8,7 +8,7 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
 server:
-  port: 8000
+  port: 8001
 network:
   type: LOCAL,FLAT,VLAN,VXLAN,GRE
 

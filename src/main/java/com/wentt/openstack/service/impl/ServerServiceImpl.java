@@ -39,10 +39,17 @@ public class ServerServiceImpl implements ServerService {
     @Override
     public List<ServerVo> getServerList(String networkId) {
 
+
         List<ServerVo> rs = new ArrayList<>();
         TNetworkServerMapExample example = new TNetworkServerMapExample();
-        example.createCriteria().andNetworkIdEqualTo(networkId);
-        List<TNetworkServerMap> tNetworkServerList = tNetworkServerMapMapper.selectByExample(example);
+        List<TNetworkServerMap> tNetworkServerList;
+        if (networkId == null) {
+            example.createCriteria().andIdIsNotNull();
+        } else {
+            example.createCriteria().andNetworkIdEqualTo(networkId);
+
+        }
+        tNetworkServerList = tNetworkServerMapMapper.selectByExample(example);
         if (CollectionUtils.isEmpty(tNetworkServerList)) {
             return new ArrayList<>();
         }
@@ -55,10 +62,11 @@ public class ServerServiceImpl implements ServerService {
             serverVo.setId(server.getId());
             serverVo.setName(server.getName());
             serverVo.setIpAddress(server.getHostId());
-            serverVo.setCreateTime(server.getCreated());
+            serverVo.setCreateTime("111");
             serverVo.setImageName(server.getImage().getName());
             serverVo.setState(server.getStatus().name());
             serverVo.setPowerState(server.getPowerState());
+            serverVo.setConsoleUrl(os.compute().servers().getVNCConsole(server.getId(), null).getURL());
             rs.add(serverVo);
         });
         return rs;

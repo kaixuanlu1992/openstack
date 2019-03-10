@@ -3,6 +3,7 @@ package com.wentt.openstack.service;
 import com.wentt.openstack.controller.dto.NetworkDto;
 import com.wentt.openstack.controller.dto.NetworkUpdateDto;
 import com.wentt.openstack.controller.dto.SubnetDto;
+import com.wentt.openstack.controller.vo.ImageVo;
 import com.wentt.openstack.controller.vo.NetworkVo;
 import com.wentt.openstack.controller.vo.RouterVo;
 import com.wentt.openstack.controller.vo.SubnetVo;
@@ -63,4 +64,21 @@ public interface NetworkService {
     void updateNetwork(NetworkUpdateDto dto);
 
 
+    /**
+     * 获取项目列表
+     * @return
+     */
+    List<ImageVo> getProjectList();
+
+    /**
+     * 获取项目列表
+     * @return
+     */
+    List<ImageVo> getRoleList();
+
+    /**
+     * 获取物理网络列表
+     * @return
+     */
+    List<String> getPhysicalList();
 }
